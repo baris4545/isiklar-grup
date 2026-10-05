@@ -3,19 +3,33 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Işıklar Grup — 2009'dan beri endüstriyel mutfak, ticari soğutma, soğuk oda, krom dekorasyon ve anahtar teslim projeler.">
+<meta name="description" content="Projenizi Işıklar Grup ile planlayın. Bornova / İzmir. 0507 808 02 24 üzerinden arayın veya WhatsApp için proje talebinizi hazırlayın.">
 <title>İletişim | Işıklar Grup</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+
+<link rel="canonical" href="https://isiklar-grupp.enes-isik44.workers.dev/iletisim">
+<meta name="theme-color" content="#101314">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="tr_TR">
+<meta property="og:site_name" content="Işıklar Grup">
+<meta property="og:title" content="İletişim | Işıklar Grup">
+<meta property="og:description" content="Projenizi Işıklar Grup ile planlayın. Bornova / İzmir. 0507 808 02 24 üzerinden arayın veya WhatsApp için proje talebinizi hazırlayın.">
+<meta property="og:url" content="https://isiklar-grupp.enes-isik44.workers.dev/iletisim">
+<meta property="og:image" content="https://isiklar-grupp.enes-isik44.workers.dev/assets/images/social-preview.jpg">
+<meta property="og:image:alt" content="Işıklar Grup · Endüstriyel mutfak ve soğutma">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="enhancements.css">
 </head>
 
 <body class="inner-page dark-hero-page contact-v9-page">
+<a class="skip-link" href="#main-content">İçeriğe geç</a>
 
 <header class="site-header" id="header">
   <div class="header-inner">
-    <a class="brand" href="index.html"><img src="assets/images/logo.png" alt="Işıklar Grup"></a>
+    <a class="brand" href="index.html"><img src="assets/images/logo.png" alt="Işıklar Grup" width="516" height="94"></a>
 
     <nav class="desktop-nav" aria-label="Ana menü">
       <div class="nav-item"><a href="index.html">Ana Sayfa</a></div>
@@ -42,12 +56,12 @@
 
       <div class="nav-item"><a href="projeler.html">Projeler</a></div>
       <div class="nav-item"><a href="referanslar.html">Referanslar</a></div>
-      <div class="nav-item"><a class="active" href="iletisim.html">İletişim</a></div>
+      <div class="nav-item"><a class="active" aria-current="page" href="iletisim.html">İletişim</a></div>
     </nav>
 
     <div class="header-actions">
       <a class="quote-btn" href="iletisim.html">Teklif Al <span>↗</span></a>
-      <button class="menu-btn" id="menuBtn" aria-label="Menüyü aç"><span></span><span></span></button>
+      <button class="menu-btn" id="menuBtn" aria-controls="mobileMenu" aria-expanded="false" aria-label="Menüyü aç"><span></span><span></span></button>
     </div>
   </div>
 
@@ -62,10 +76,10 @@
   </div>
 </header>
 
-<main>
+<main id="main-content" tabindex="-1">
 
 <section class="contact-v9-hero">
-  <div class="contact-v9-hero-media" style="background-image:url('assets/images/iletisim-hero.png');"></div>
+  <div class="contact-v9-hero-media" style="background-image:url('assets/images/iletisim-hero.webp');"></div>
   <div class="contact-v9-hero-overlay"></div>
 
   <div class="wrap contact-v9-hero-inner">
@@ -152,7 +166,7 @@
 
         <div>
           <small>ADRES</small>
-          <strong>Evka 3 Mahallesi, 129/3 Sokak<br>Bornova / İzmir</strong>
+          <strong>Evka 3 Mahallesi, 129/3 Sokak<br>Bornova / İzmir</strong><a class="map-link" href="https://www.google.com/maps/search/?api=1&amp;query=Evka+3+Mahallesi+129%2F3+Sokak+Bornova+Izmir" target="_blank" rel="noopener">Adresi haritada ara ↗</a>
         </div>
       </div>
 
@@ -172,14 +186,17 @@
       <form class="contact-v9-form" id="quoteForm">
         <div class="contact-v9-field">
           <label for="name">AD SOYAD</label>
-          <input id="name" name="name" required placeholder="Adınız Soyadınız">
+          <input id="name" name="name" autocomplete="name" maxlength="100" required placeholder="Adınız Soyadınız">
         </div>
 
         <div class="contact-v9-field">
           <label for="phone">TELEFON</label>
-          <input id="phone" name="phone" required placeholder="05xx xxx xx xx">
+          <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" maxlength="30" required placeholder="05xx xxx xx xx">
         </div>
 
+        <div class="contact-v9-field"><label for="company">FİRMA / İŞLETME (İSTEĞE BAĞLI)</label><input id="company" name="company" autocomplete="organization" maxlength="120" placeholder="Firma veya işletme adınız"></div>
+        <div class="contact-v9-field"><label for="location">PROJE KONUMU (İSTEĞE BAĞLI)</label><input id="location" name="location" maxlength="120" placeholder="İl / ilçe veya ülke"></div>
+        <div class="contact-v9-field full"><label for="timeline">HEDEF TARİH (İSTEĞE BAĞLI)</label><input id="timeline" name="timeline" maxlength="100" placeholder="Örneğin: Mart 2027 veya henüz belli değil"></div>
         <div class="contact-v9-field full">
           <label for="service">HİZMET</label>
           <select id="service" name="service">
@@ -194,13 +211,14 @@
 
         <div class="contact-v9-field full">
           <label for="message">PROJE / MESAJ</label>
-          <textarea id="message" name="message" rows="6" placeholder="Mekânınız, proje kapsamı ve ihtiyacınızı kısaca yazabilirsiniz."></textarea>
+          <textarea id="message" name="message" rows="6" maxlength="2000" placeholder="Mekânınız, proje kapsamı ve ihtiyacınızı kısaca yazabilirsiniz."></textarea>
         </div>
 
         <div class="contact-v9-submit full">
-          <button type="submit">WhatsApp Üzerinden Gönder <span>↗</span></button>
-          <p>Mesajınız WhatsApp'ta hazırlanır; gönderim sizin onayınızla gerçekleşir.</p>
+          <button type="submit">WhatsApp mesajını hazırla <span>↗</span></button>
+          <p>Bilgileriniz WhatsApp mesajına aktarılır. Mesajı kontrol edip kendiniz gönderirsiniz; bu form web sitesinde kayıt oluşturmaz.</p>
         </div>
+      <p id="quote-status" class="quote-status" role="status" aria-live="polite"></p>
       </form>
     </section>
 
@@ -238,8 +256,8 @@
 
 <footer>
   <div class="wrap footer-grid">
-    <img src="assets/images/logo.png" alt="Işıklar Grup">
-    <p>2009'dan beri profesyonel çözümler.</p>
+    <img src="assets/images/logo.png" alt="Işıklar Grup" width="516" height="94">
+    <p>2009'dan beri profesyonel çözümler.<br><a class="brochure-link" href="assets/documents/firma-tanitimi.pdf" download>Firma tanıtımını indir (PDF, 526 KB) ↓</a></p>
     <div>
       <a href="kurumsal.html">Kurumsal</a>
       <a href="hizmetler.html">Hizmetler</a>
@@ -254,35 +272,9 @@
 <a class="floating-wa" href="https://wa.me/905078080224" target="_blank" rel="noopener" aria-label="WhatsApp'tan yaz"><span>WA</span></a>
 
 <script src="app.js"></script>
+<script src="enhancements.js"></script>
 
-<script>
-(function(){
-  const form = document.getElementById('quoteForm');
-  if(!form) return;
 
-  form.addEventListener('submit', function(e){
-    e.preventDefault();
-
-    const name = form.elements['name'].value.trim();
-    const phone = form.elements['phone'].value.trim();
-    const service = form.elements['service'].value.trim();
-    const message = form.elements['message'].value.trim();
-
-    const text =
-`Merhaba Işıklar Grup,
-
-Proje talebi oluşturmak istiyorum.
-
-Ad Soyad: ${name}
-Telefon: ${phone}
-Hizmet: ${service}
-Proje / Mesaj: ${message || '-'}`;
-
-    const url = 'https://wa.me/905078080224?text=' + encodeURIComponent(text);
-    window.open(url, '_blank', 'noopener');
-  });
-})();
-</script>
 
 </body>
 </html>

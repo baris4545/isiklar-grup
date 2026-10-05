@@ -2342,7 +2342,7 @@ body.corporate-v9-page .corporate-v9-hero-overlay{
   inset:0;
 }
 body.corporate-v9-page .corporate-v9-hero-media{
-  background:url('assets/images/kurumsal-hero.png') center 50%/cover no-repeat;
+  background:url('assets/images/kurumsal-hero.webp') center 50%/cover no-repeat;
   filter:grayscale(1) contrast(1.06);
   transform:scale(1.012);
 }
@@ -2535,7 +2535,7 @@ body.corporate-v9-page .corporate-v9-philosophy-grid{
 }
 body.corporate-v9-page .corporate-v9-philosophy-image{
   min-height:650px;
-  background:url('assets/images/kurumsal-hero.png') 69% center/cover no-repeat;
+  background:url('assets/images/kurumsal-hero.webp') 69% center/cover no-repeat;
   filter:grayscale(1) contrast(1.06);
 }
 body.corporate-v9-page .corporate-v9-philosophy-copy>span{
@@ -2782,17 +2782,17 @@ body.home-v8 .v8-triad-img::after{
 }
 
 body.home-v8 .v8-triad-img.triad-project{
-  background-image:url('assets/images/home/proje.png') !important;
+  background-image:url('assets/images/home/proje.webp') !important;
   background-position:center center !important;
 }
 
 body.home-v8 .v8-triad-img.triad-production{
-  background-image:url('assets/images/home/uretim.png') !important;
+  background-image:url('assets/images/home/uretim.webp') !important;
   background-position:center center !important;
 }
 
 body.home-v8 .v8-triad-img.triad-install{
-  background-image:url('assets/images/home/uygulama.png') !important;
+  background-image:url('assets/images/home/uygulama.webp') !important;
   background-position:center center !important;
 }
 

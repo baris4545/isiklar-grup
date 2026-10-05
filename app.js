@@ -23,63 +23,47 @@ if (header) {
 
 const menuBtn = document.getElementById('menuBtn');
 const mobileMenu = document.getElementById('mobileMenu');
-
 if (menuBtn && mobileMenu) {
-
-  const openMenu = () => {
-    mobileMenu.classList.add('open');
-    menuBtn.classList.add('open');
-    header?.classList.add('menu-open');
-
-    document.body.classList.add('mobile-menu-active');
-    document.body.style.overflow = 'hidden';
-
-    menuBtn.setAttribute('aria-expanded', 'true');
-  };
-
-  const closeMenu = () => {
+  let previousOverflow = '';
+  const background = [...document.querySelectorAll('main, footer, .floating-wa')];
+  const closeMenu = (restoreFocus = false) => {
+    if (!mobileMenu.classList.contains('open')) return;
     mobileMenu.classList.remove('open');
     menuBtn.classList.remove('open');
     header?.classList.remove('menu-open');
-
     document.body.classList.remove('mobile-menu-active');
-    document.body.style.overflow = '';
-
+    document.body.style.overflow = previousOverflow;
     menuBtn.setAttribute('aria-expanded', 'false');
+    menuBtn.setAttribute('aria-label', 'Menüyü aç');
+    background.forEach(el => el.inert = false);
+    if (restoreFocus) menuBtn.focus();
   };
-
-  menuBtn.setAttribute('aria-expanded', 'false');
-
   menuBtn.addEventListener('click', () => {
-    const isOpen = mobileMenu.classList.contains('open');
-
-    if (isOpen) {
-      closeMenu();
-    } else {
-      openMenu();
-    }
+    if (mobileMenu.classList.contains('open')) { closeMenu(true); return; }
+    previousOverflow = document.body.style.overflow;
+    mobileMenu.classList.add('open');
+    menuBtn.classList.add('open');
+    header?.classList.add('menu-open');
+    document.body.classList.add('mobile-menu-active');
+    document.body.style.overflow = 'hidden';
+    menuBtn.setAttribute('aria-expanded', 'true');
+    menuBtn.setAttribute('aria-label', 'Menüyü kapat');
+    background.forEach(el => el.inert = true);
+    mobileMenu.querySelector('a')?.focus();
   });
-
-  mobileMenu.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', closeMenu);
-  });
-
+  mobileMenu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => closeMenu()));
   document.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && mobileMenu.classList.contains('open')) {
-      closeMenu();
+    if (!mobileMenu.classList.contains('open')) return;
+    if (e.key === 'Escape') { e.preventDefault(); closeMenu(true); }
+    if (e.key === 'Tab') {
+      const items = [menuBtn, ...mobileMenu.querySelectorAll('a[href]')];
+      const index = items.indexOf(document.activeElement);
+      e.preventDefault();
+      items[(index + (e.shiftKey ? -1 : 1) + items.length) % items.length].focus();
     }
   });
-
-  window.addEventListener('resize', () => {
-    if (
-      window.innerWidth > 980 &&
-      mobileMenu.classList.contains('open')
-    ) {
-      closeMenu();
-    }
-  });
+  window.addEventListener('resize', () => { if (window.innerWidth > 980) closeMenu(); });
 }
-
 
 /* =========================================================
    REVEAL ANIMATIONS
@@ -110,88 +94,48 @@ if (revealElements.length) {
    PROJECT VIDEO MODAL
 ========================================================= */
 
-const modal = document.getElementById('videoModal');
-const video = document.getElementById('projectVideo');
-const title = document.getElementById('modalTitle');
-
-if (modal && video && title) {
-
-  const openModal = card => {
-    video.src = card.dataset.video;
-    title.textContent = card.dataset.name || 'Proje';
-
-    modal.classList.add('open');
-    modal.setAttribute('aria-hidden', 'false');
-
-    document.body.style.overflow = 'hidden';
-
-    video.play().catch(() => {});
+// Shared dialog behavior also covers service videos.
+function initVideoDialog(ids, selector, sourceKey, nameKey) {
+  const dialog = document.getElementById(ids[0]);
+  const player = document.getElementById(ids[1]);
+  const heading = document.getElementById(ids[2]);
+  const close = document.getElementById(ids[3]);
+  if (!dialog || !player || !heading || !close) return;
+  dialog.setAttribute('role', 'dialog');
+  dialog.setAttribute('aria-modal', 'true');
+  dialog.setAttribute('aria-labelledby', ids[2]);
+  player.setAttribute('preload', 'none');
+  let opener, overflow = '';
+  const closeDialog = () => {
+    if (!dialog.classList.contains('open')) return;
+    player.pause(); player.removeAttribute('src'); player.load();
+    dialog.classList.remove('open'); dialog.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = overflow;
+    opener?.focus();
   };
-
-  const closeModal = () => {
-    video.pause();
-    video.removeAttribute('src');
-    video.load();
-
-    modal.classList.remove('open');
-    modal.setAttribute('aria-hidden', 'true');
-
-    document.body.style.overflow = '';
-  };
-
-  document.querySelectorAll('[data-video]').forEach(card => {
-    card.addEventListener('click', () => openModal(card));
-  });
-
-  document
-    .getElementById('modalClose')
-    ?.addEventListener('click', closeModal);
-
-  modal.addEventListener('click', e => {
-    if (e.target === modal) {
-      closeModal();
-    }
-  });
-
+  document.querySelectorAll(selector).forEach(card => card.addEventListener('click', () => {
+    opener = card; overflow = document.body.style.overflow;
+    player.src = card.dataset[sourceKey]; heading.textContent = card.dataset[nameKey] || 'Proje';
+    dialog.classList.add('open'); dialog.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden'; close.focus();
+    player.play().catch(() => {});
+  }));
+  close.addEventListener('click', closeDialog);
+  dialog.addEventListener('click', e => { if (e.target === dialog) closeDialog(); });
   document.addEventListener('keydown', e => {
-    if (
-      e.key === 'Escape' &&
-      modal.classList.contains('open')
-    ) {
-      closeModal();
+    if (!dialog.classList.contains('open')) return;
+    if (e.key === 'Escape') { e.preventDefault(); closeDialog(); }
+    if (e.key === 'Tab') {
+      // The browser owns the native media controls; keep focus inside the dialog.
+      if (e.shiftKey && document.activeElement === close) { e.preventDefault(); player.focus(); }
     }
   });
-}
-
-
-/* =========================================================
-   WHATSAPP QUOTE FORM
-========================================================= */
-
-const quoteForm = document.getElementById('quoteForm');
-
-if (quoteForm) {
-  quoteForm.addEventListener('submit', e => {
-    e.preventDefault();
-
-    const fd = new FormData(quoteForm);
-
-    const msg =
-`Merhaba Işıklar Grup, web siteniz üzerinden proje hakkında bilgi almak istiyorum.
-
-Ad Soyad: ${fd.get('name') || '-'}
-Telefon: ${fd.get('phone') || '-'}
-Proje/Hizmet: ${fd.get('service') || '-'}
-Mesaj: ${fd.get('message') || '-'}`;
-
-    window.open(
-      `https://wa.me/905078080224?text=${encodeURIComponent(msg)}`,
-      '_blank',
-      'noopener'
-    );
+  document.addEventListener('focusin', e => {
+    if (dialog.classList.contains('open') && !dialog.contains(e.target)) close.focus();
   });
 }
-
+initVideoDialog(['videoModal', 'projectVideo', 'modalTitle', 'modalClose'], '[data-video]', 'video', 'name');
+initVideoDialog(['serviceVideoModal', 'serviceVideoModalPlayer', 'serviceVideoModalTitle', 'serviceVideoModalClose'], '[data-service-video]', 'serviceVideo', 'serviceName');
 
 /* =========================================================
    V8 INTERACTIVE SERVICES
@@ -281,7 +225,7 @@ if (projectRail) {
 const heroParallax =
   document.getElementById('heroParallax');
 
-if (heroParallax) {
+if (heroParallax && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
 
   const updateParallax = () => {
     const y = Math.min(window.scrollY, 700);
@@ -305,7 +249,7 @@ if (heroParallax) {
 
 const premiumHero = document.getElementById('heroParallax');
 
-if (premiumHero && window.matchMedia('(min-width: 981px)').matches) {
+if (premiumHero && window.matchMedia('(min-width: 981px)').matches && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
 
   const heroSection = premiumHero.closest('.v8-hero');
 
@@ -392,39 +336,4 @@ if (premiumRail) {
 }
 
 
-/* Header slight hide/show */
-
-if (header) {
-
-  let lastScroll = window.scrollY;
-
-  window.addEventListener(
-    'scroll',
-    () => {
-
-      const currentScroll = window.scrollY;
-
-      if (
-        currentScroll > lastScroll &&
-        currentScroll > 180 &&
-        !header.classList.contains('menu-open')
-      ) {
-
-        header.style.transform =
-          'translateY(-100%)';
-
-      } else {
-
-        header.style.transform =
-          'translateY(0)';
-      }
-
-      lastScroll = currentScroll;
-
-    },
-    { passive:true }
-  );
-
-  header.style.transition =
-    'transform .35s ease, background .35s ease, box-shadow .35s ease';
-}
+// Navigation stays visible while scrolling so contact and menu controls remain reachable.
